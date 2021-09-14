@@ -3,10 +3,9 @@
 % Import packages
 \usepackage{mathtools}
 \usepackage{graphicx}
-\usepackage{wrapfig}
 \usepackage{tikz}
 
-\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning,shapes,arrows}
 
 % Page initialization
 \setlength{\topmargin}{-.3 in}
@@ -82,47 +81,96 @@
     \vspace{0.4 cm}
 
     \item For each of the following block diagrams, reduce the block diagram to find $T(s)$, where $T(s)$ is defined by $Y(s)=T(s)R(s)$.
+    
+    % define the blocks
+    \tikzstyle{block} = [draw, fill=blue!20, rectangle, minimum height=2.5em, minimum width=4em]
+    \tikzstyle{sum} = [draw, fill=blue!20, circle, node distance=1cm]
+    \tikzstyle{input} = [coordinate]
+    \tikzstyle{output} = [coordinate]
+    
     \begin{enumerate}
-        \item 
+        \item \leavevmode\vadjust{\vspace{-\baselineskip}}\newline % Part A
+        % Create image of block diagram
+        \begin{tikzpicture}[auto, node distance=2cm,>=latex'][h]
+
+            % Place the blocks in desired locations
+            \node [input, name=input] {};
+            \node [sum, right of=input, node distance=2cm] (sum1) {};
+            \node [block, right of=sum1, node distance=4cm] (G) {$G(s)$};
+            \node [block, above of=G, node distance=1.5cm] (H1) {$H_1(s)$};
+            \node [block, below of=G, node distance=1.5cm] (H2) {$H_2(s)$};
+            \node [sum, right of=G, node distance=4cm] (sum2) {};
+            \node [output, right of=sum2, node distance=2cm] (output) {};
+
+            % Once the nodes are placed, connecting them is easy. 
+            \draw [draw,->] (input) -- node {$R(s)$} node[pos=0.95] {$+$} (sum1);
+            \draw [->] (sum1) -- node[name=error] {} (G);
+            \draw [->] (error.east|-G) |- (H1);
+            \draw [->] (G) -- node [name=y] {$y$}(sum2);
+            \draw [->] (y) |- (H2);
+            \draw [->] (H2) -| node[pos=0.95] {$-$} node [near end] {} (sum1);
+            \draw [->] (H1) -| (sum2);
+            \draw [draw,->] (sum2) -- node {$Y(s)$} (output);
+        \end{tikzpicture}
+        \vspace{0.6 cm}
+
+        \item \leavevmode\vadjust{\vspace{-\baselineskip}}\newline % Part B
+        % Create image of block diagram
+        \begin{tikzpicture}[auto, node distance=2cm,>=latex'][h]
+
+            % Place the blocks in desired locations
+            \node [input, name=input] {};
+            \node [sum, right of=input, node distance=2cm] (sum1) {};
+            \node [block, right of=sum1, node distance=4cm] (G) {$G(s)$};
+            \node [block, above of=G, node distance=1.5cm] (H1) {$H_1(s)$};
+            \node [block, below of=G, node distance=1.5cm] (H2) {$H_2(s)$};
+            \node [sum, right of=G, node distance=4cm] (sum2) {};
+            \node [output, right of=sum2, node distance=2cm] (output) {};
+
+            % Once the nodes are placed, connecting them is easy. 
+            \draw [draw,->] (input) -- node {$R(s)$} node[pos=0.95] {$+$} (sum1);
+            \draw [->] (sum1) -- node[name=error] {} (G);
+            \draw [->] (error.east|-G) |- (H1);
+            \draw [->] (G) -- node [name=y] {$y$}(sum2);
+            \draw [->] (y) |- (H2);
+            \draw [->] (H2) -| node[pos=0.95] {$-$} node [near end] {} (sum1);
+            \draw [->] (H1) -| (sum2);
+            \draw [draw,->] (sum2) -- node {$Y(s)$} (output);
+        \end{tikzpicture}
+        \vspace{0.6 cm}
+
+        \item \leavevmode\vadjust{\vspace{-\baselineskip}}\newline % Part C
+        % Create image of block diagram
+        \begin{tikzpicture}[auto, node distance=2cm,>=latex'][h]
+
+            % Place the blocks in desired locations
+            \node [input, name=input] {};
+            \node [sum, right of=input, node distance=2cm] (sum1) {};
+            \node [block, right of=sum1, node distance=4cm] (G) {$G(s)$};
+            \node [block, above of=G, node distance=1.5cm] (H1) {$H_1(s)$};
+            \node [block, below of=G, node distance=1.5cm] (H2) {$H_2(s)$};
+            \node [sum, right of=G, node distance=4cm] (sum2) {};
+            \node [output, right of=sum2, node distance=2cm] (output) {};
+
+            % Once the nodes are placed, connecting them is easy. 
+            \draw [draw,->] (input) -- node {$R(s)$} node[pos=0.95] {$+$} (sum1);
+            \draw [->] (sum1) -- node[name=error] {} (G);
+            \draw [->] (error.east|-G) |- (H1);
+            \draw [->] (G) -- node [name=y] {$y$}(sum2);
+            \draw [->] (y) |- (H2);
+            \draw [->] (H2) -| node[pos=0.95] {$-$} node [near end] {} (sum1);
+            \draw [->] (H1) -| (sum2);
+            \draw [draw,->] (sum2) -- node {$Y(s)$} (output);
+        \end{tikzpicture}
+
     \end{enumerate}
 
 \end{enumerate}
 
-\begin{figure}
-    \includegraphics[scale=0.25]{HW2_image.PNG} % width=\linewidth
-    \label{fig:convolution}
-\end{figure}
-
-
-
-\tikzstyle{block} = [draw, fill=blue!20, rectangle, 
-    minimum height=2.5em, minimum width=4em]
-\tikzstyle{sum} = [draw, fill=blue!20, circle, node distance=1cm]
-\tikzstyle{input} = [coordinate]
-\tikzstyle{output} = [coordinate]
-
-% The block diagram code is probably more verbose than necessary
-\begin{tikzpicture}[auto, node distance=2cm,>=latex']
-    % We start by placing the blocks
-    \node [input, name=input] {};
-    \node [sum, right of=input] (sum) {};
-    \node [block, right of=sum] (G) {$G(s)$};
-    % \node [block, above of=G, node distance=3cm] (H1) {$H_1(s)$}
-    \node [block, right of=G, node distance=3cm] (H2) {$H_2(s)$};
-    % We draw an edge between G and H2 block to 
-    % calculate the coordinate u. We need it to place the measurement block. 
-    \draw [->] (G) -- node[name=u] {$u$} (H2);
-    \node [output, right of=H2] (output) {};
-    \node [block, below of=u] (measurements) {Measurements};
-
-    % Once the nodes are placed, connecting them is easy. 
-    \draw [draw,->] (input) -- node {$r$} (sum);
-    \draw [->] (sum) -- node {$e$} (G);
-    \draw [->] (H2) -- node [name=y] {$y$}(output);
-    \draw [->] (y) |- (measurements);
-    \draw [->] (measurements) -| node[pos=0.99] {$-$} 
-        node [near end] {$y_m$} (sum);
-\end{tikzpicture}
+% \begin{figure}
+%     \includegraphics[scale=0.25]{HW2_image.PNG} % width=\linewidth
+%     \label{fig:convolution}
+% \end{figure}
 
 \end{document}
 
