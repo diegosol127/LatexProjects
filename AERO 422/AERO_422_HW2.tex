@@ -83,8 +83,8 @@
     \item For each of the following block diagrams, reduce the block diagram to find $T(s)$, where $T(s)$ is defined by $Y(s)=T(s)R(s)$.
     
     % define the blocks
-    \tikzstyle{block} = [draw, fill=blue!20, rectangle, minimum height=2.5em, minimum width=4em]
-    \tikzstyle{sum} = [draw, fill=blue!20, circle, node distance=1cm]
+    \tikzstyle{block} = [draw, fill=black!10, rectangle, minimum height=2.5em, minimum width=4em]
+    \tikzstyle{sum} = [draw, circle, node distance=1cm]
     \tikzstyle{input} = [coordinate]
     \tikzstyle{output} = [coordinate]
     
@@ -95,22 +95,23 @@
 
             % Place the blocks in desired locations
             \node [input, name=input] {};
-            \node [sum, right of=input, node distance=2cm] (sum1) {};
+            \node [sum, right of=input, node distance=1.5cm] (sum1) {};
             \node [block, right of=sum1, node distance=4cm] (G) {$G(s)$};
             \node [block, above of=G, node distance=1.5cm] (H1) {$H_1(s)$};
             \node [block, below of=G, node distance=1.5cm] (H2) {$H_2(s)$};
             \node [sum, right of=G, node distance=4cm] (sum2) {};
-            \node [output, right of=sum2, node distance=2cm] (output) {};
+            \node [output, right of=sum2, node distance=1.5cm] (output) {};
 
             % Once the nodes are placed, connecting them is easy. 
-            \draw [draw,->] (input) -- node {$R(s)$} node[pos=0.95] {$+$} (sum1);
+            \draw [draw,->] (input) -- node[left of=input, node distance=1.2cm] {$R(s)$} node[pos=0.94] {$+$} (sum1);
             \draw [->] (sum1) -- node[name=error] {} (G);
             \draw [->] (error.east|-G) |- (H1);
-            \draw [->] (G) -- node [name=y] {$y$}(sum2);
+            \draw [->] (G) -- node[name=y] {} node[pos=0.97,below] {$+$} (sum2);
             \draw [->] (y) |- (H2);
-            \draw [->] (H2) -| node[pos=0.95] {$-$} node [near end] {} (sum1);
-            \draw [->] (H1) -| (sum2);
-            \draw [draw,->] (sum2) -- node {$Y(s)$} (output);
+            \draw [->] (H2) -| node[pos=0.95] {$-$} (sum1);
+            \draw [->] (H1) -| (sum2) node[pos=0.95,left] {$+$};
+            \draw [draw,->] (sum2) -- node[right of=input, node distance=1.2cm] {$Y(s)$} (output);
+
         \end{tikzpicture}
         \vspace{0.6 cm}
 
@@ -120,22 +121,28 @@
 
             % Place the blocks in desired locations
             \node [input, name=input] {};
-            \node [sum, right of=input, node distance=2cm] (sum1) {};
-            \node [block, right of=sum1, node distance=4cm] (G) {$G(s)$};
-            \node [block, above of=G, node distance=1.5cm] (H1) {$H_1(s)$};
-            \node [block, below of=G, node distance=1.5cm] (H2) {$H_2(s)$};
-            \node [sum, right of=G, node distance=4cm] (sum2) {};
-            \node [output, right of=sum2, node distance=2cm] (output) {};
+            \node [sum, right of=input, node distance=4cm] (sum1) {};
+            \node [block, above of=sum1, node distance=1.5cm] (G1) {$G_1(s)$};
+            \node [sum, right of=sum1, node distance=2cm] (sum2) {};
+            \node [block, right of=sum2, node distance=2.5cm] (G2) {$G_2(s)$};
+            \node [block, below of=G2, node distance=1.5cm] (H1) {$H_1(s)$};
+            \node [sum, left of=H1, node distance=2.5cm] (sum3) {};
+            \node [block, below of=H1, node distance=1.5cm] (H2) {$H_2(s)$};
+            \node [output, right of=G2, node distance=4cm] (output) {};
 
             % Once the nodes are placed, connecting them is easy. 
-            \draw [draw,->] (input) -- node {$R(s)$} node[pos=0.95] {$+$} (sum1);
-            \draw [->] (sum1) -- node[name=error] {} (G);
-            \draw [->] (error.east|-G) |- (H1);
-            \draw [->] (G) -- node [name=y] {$y$}(sum2);
+            \draw [->] (input) -- node[name=r] {} node[left of=input, node distance=2.5cm] {$R(s)$} node[pos=0.97] {$+$} (sum1);
+            \draw [->] (r.east|-sum1) |- (G1);
+            \draw [->] (sum1) -- node[pos=0.95,below] {$+$} (sum2);
+            \draw [->] (G1) -| node[pos=0.97,left] {$+$} (sum2);
+            \draw [->] (sum2) -- (G2);
+            \draw [->] (G2) -- node[name=y] {} node[right of=input, node distance=2.2cm] {$Y(s)$} (output);
+            \draw [->] (y) |- (H1);
             \draw [->] (y) |- (H2);
-            \draw [->] (H2) -| node[pos=0.95] {$-$} node [near end] {} (sum1);
-            \draw [->] (H1) -| (sum2);
-            \draw [draw,->] (sum2) -- node {$Y(s)$} (output);
+            \draw [->] (H1) -- node[pos=0.95,above] {$+$} (sum3);
+            \draw [->] (H2) -| node[pos=0.97,right] {$-$} (sum3);
+            \draw [->] (sum3) -| node[pos=0.97,left] {$+$} (sum1);
+
         \end{tikzpicture}
         \vspace{0.6 cm}
 
@@ -145,22 +152,23 @@
 
             % Place the blocks in desired locations
             \node [input, name=input] {};
-            \node [sum, right of=input, node distance=2cm] (sum1) {};
+            \node [sum, right of=input, node distance=1.5cm] (sum1) {};
             \node [block, right of=sum1, node distance=4cm] (G) {$G(s)$};
             \node [block, above of=G, node distance=1.5cm] (H1) {$H_1(s)$};
             \node [block, below of=G, node distance=1.5cm] (H2) {$H_2(s)$};
             \node [sum, right of=G, node distance=4cm] (sum2) {};
-            \node [output, right of=sum2, node distance=2cm] (output) {};
+            \node [output, right of=sum2, node distance=1.5cm] (output) {};
 
             % Once the nodes are placed, connecting them is easy. 
-            \draw [draw,->] (input) -- node {$R(s)$} node[pos=0.95] {$+$} (sum1);
+            \draw [draw,->] (input) -- node[left of=input, node distance=1.2cm] {$R(s)$} node[pos=0.94] {$+$} (sum1);
             \draw [->] (sum1) -- node[name=error] {} (G);
             \draw [->] (error.east|-G) |- (H1);
-            \draw [->] (G) -- node [name=y] {$y$}(sum2);
+            \draw [->] (G) -- node[name=y] {} node[pos=0.97,below] {$+$} (sum2);
             \draw [->] (y) |- (H2);
-            \draw [->] (H2) -| node[pos=0.95] {$-$} node [near end] {} (sum1);
-            \draw [->] (H1) -| (sum2);
-            \draw [draw,->] (sum2) -- node {$Y(s)$} (output);
+            \draw [->] (H2) -| node[pos=0.95] {$-$} (sum1);
+            \draw [->] (H1) -| (sum2) node[pos=0.95,left] {$+$};
+            \draw [draw,->] (sum2) -- node[right of=input, node distance=1.2cm] {$Y(s)$} (output);
+
         \end{tikzpicture}
 
     \end{enumerate}
