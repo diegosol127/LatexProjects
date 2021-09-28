@@ -140,7 +140,6 @@
         \end{flalign*}
         }
     \end{enumerate}
-    \vspace{0.4 cm}
 
     %---------------------------PROBLEM-3--------------------------%
     \item A given system is found to have a transfer function that is
@@ -164,10 +163,84 @@
                 0       & t < 0
             \end{cases}
         \]
-        \item (\textbf{2 points}) Now use the Laplace transform table and partial fraction expansion to find $y(t)$.
-        \item (\textbf{2 points}) Apply I.V.T. and F.V.T. (if applicable) to find $y(0)$ and $y(\infty)$.
+        \textcolor{blue}{
+        There are only two cases to consider for this problem.\\\\
+        Case (a): for the case $t \leq 0$, the situation is illustrated in Figure 1 as part (c). There is no overlap between the two functions $\left(u(t-\tau) \text{ and } h(\tau)\right)$ so the output is zero.
+        \begin{flalign*}
+            y_1(t) = 0, \quad t \leq 0
+        \end{flalign*}
+        Case (b): for the case $t \geq 0$, the situation is displayed in Figure 1 as part (d). In this figure, the unit step function is denoted as $u(t)$. The output of the system is given by
+        \begin{flalign*}
+            y_2(t) &= \int_{0}^{t} h(\tau) \cdot u(t-\tau) \,d\tau\\
+            &= \int_{0}^{t} (\tau e^{-\tau})(1) \,d\tau  \quad \rightarrow \quad \text{integration by parts}\\
+            &= 1-(t+1)e^-t, \quad t \geq 0
+        \end{flalign*}
+        }
+
+        \item (\textbf{2 points}) Now use the Laplace transform table and partial fraction expansion to find $y(t)$.\\
+        \textcolor{blue}{
+        Refer to the following properties from the Laplace table
+        \begin{flalign*}
+            \mathcal{L}\left\{\frac{1}{s}\right\} = 1(t) \quad (1), \qquad
+            \mathcal{L}\left\{\frac{1}{s-a}\right\} = e^{at} \quad (15), \qquad
+            \mathcal{L}\left\{te^{at}\right\} = \frac{1}{(s-a)^2} \quad (20)
+        \end{flalign*}
+        Convolution in time-domain is equivalent to multiplication in frequency-domain.
+        \begin{flalign*}
+            Y(s) &= H(s) \cdot U(s)\\
+            &= \mathcal{L} \left\{te^{-t}\right\} \cdot \mathcal{L} \left\{1\right\}\\
+            &= \frac{1}{(s+1)^2} \cdot \frac{1}{s}
+        \end{flalign*}
+        The partial fraction expansion of this transfer function takes the form
+        \begin{flalign*}
+            Y(s) = \frac{A}{s} + \frac{B}{s+1} + \frac{C}{(s+1)^2}
+        \end{flalign*}
+        Reduce this form of $F(s)$ into a single rational function.
+        \begin{flalign*}
+            Y(s) &= \frac{A(s+1)^2 + Bs(s+1) + Cs}{s(s+1)^2}\\
+            &= \frac{(A+B)s^2 + (2A+B+C)s + A}{s(s+1)^2}
+        \end{flalign*}
+        Comparing this form of $F(s)$ to the original form yields a set of 3 equations with 3 unknowns as
+        \begin{flalign*}
+            A+B &= 0\\
+            2A+B+C &= 0\\
+            A &= 1
+        \end{flalign*}
+        The solution to these equations is $A=1$, $B=-1$, and $C=-1$. Then the partial fraction expansion of $F(s)$ is
+        \begin{flalign*}
+            F(s) = \frac{1}{s} - \frac{1}{s+1} - \frac{1}{(s+1)^2}
+        \end{flalign*}
+        Apply $(1)$, $(15)$, $(20)$ to find $f(t)$.
+        \begin{flalign*}
+            f(t) &= \mathcal{L}^{-1} \left\{F(s)\right\}\\
+            &= - \mathcal{L}^{-1} \left\{\frac{1}{s}\right\} - \mathcal{L}^{-1} \left\{\frac{1}{s+1}\right\} - \mathcal{L}^{-1} \left\{\frac{1}{(s+1)^2}\right\}\\
+            &= 1 - e^{-t} - te^{-t}, \quad t \geq 0\\
+            &= 1-(t+1)e^-t, \quad t \geq 0
+        \end{flalign*}
+        Note this solution is identical to the solution in part a), proving that convolution in time-domain is equivalent to multiplication in frequency-domain.
+        }\vspace{0.4 cm}
+
+
+        \item (\textbf{2 points}) Apply I.V.T. and F.V.T. (if applicable) to find $y(0)$ and $y(\infty)$.\\
+        \textcolor{blue}{
+        By inspection, both Initial Value Theorem and Final Value Theorem can be applied because $y(t)$ results in finite values for $t \rightarrow 0$ and $t \rightarrow \infty$.\\\\
+        Initial Value Theorem:\\
+        \begin{flalign*}
+            \lim_{t \to 0} f(t) &= \lim_{s \to \infty} s \cdot Y(s)\\
+            &= \lim_{s \to \infty} s \cdot \frac{1}{(s+1)^2} \cdot \frac{1}{s}\\
+            &= \lim_{s \to \infty} \frac{1}{(s+1)^2}\\
+            &= 0
+        \end{flalign*}
+        Final Value Theorem:\\
+        \begin{flalign*}
+            \lim_{t \to \infty} f(t) &= \lim_{s \to 0} s \cdot Y(s)\\
+            &= \lim_{s \to 0} s \cdot \frac{1}{(s+1)^2} \cdot \frac{1}{s}\\
+            &= \lim_{s \to 0} \frac{1}{(s+1)^2}\\
+            &= 1
+        \end{flalign*}
+        }
     \end{enumerate}
-    \vspace{0.4 cm}
+    % \vspace{0.4 cm}
 
     %---------------------------PROBLEM-5--------------------------%
     \item For each of the following block diagrams, reduce the block diagram to find $T(s)$, where $T(s)$ is defined by $Y(s)=T(s)R(s)$.
@@ -179,7 +252,9 @@
     \tikzstyle{output} = [coordinate]
     
     \begin{enumerate}
-        \item (\textbf{1.5 points}) \leavevmode\vadjust{\vspace{-\baselineskip}}\newline % Part A
+        \item (\textbf{1.5 points}) \\
+        \textcolor{blue}{Solution in other document (Problem 4a)}
+        \leavevmode\vadjust{\vspace{-\baselineskip}}\newline \\ \\% Part A
         % Create image of block diagram
         \begin{tikzpicture}[auto, node distance=2cm,>=latex'][h]
 
@@ -205,7 +280,9 @@
         \end{tikzpicture}
         \vspace{0.6 cm}
 
-        \item (\textbf{3 points}) \leavevmode\vadjust{\vspace{-\baselineskip}}\newline % Part B
+        \item (\textbf{3 points}) \\
+        \textcolor{blue}{Solution in other document (Problem 4b)}
+        \leavevmode\vadjust{\vspace{-\baselineskip}}\newline \\ \\ % Part B
         % Create image of block diagram
         \begin{tikzpicture}[auto, node distance=2cm,>=latex'][h]
 
@@ -236,7 +313,9 @@
         \end{tikzpicture}
         \vspace{0.6 cm}
 
-        \item (\textbf{1.5 points}) \leavevmode\vadjust{\vspace{-\baselineskip}}\newline \\ \\ % Part C
+        \item (\textbf{1.5 points}) \\
+        \textcolor{blue}{Solution in other document (Problem 4c)}
+        \leavevmode\vadjust{\vspace{-\baselineskip}}\newline \\ \\ % Part C
         % Create image of block diagram
         \begin{tikzpicture}[auto, node distance=2cm,>=latex'][h]
 
