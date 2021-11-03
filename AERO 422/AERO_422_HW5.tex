@@ -126,7 +126,7 @@ expected value for $M_0$ of 0.6.
         \label{fig:P6d}
     \end{figure}
     \part[4] Assume $K = 600$ for this and the following parts of the question. Write the characteristic equation in Evans form with $K_T$ as the parameter of interest.\\
-    \ans{Denote the transfer functions of the inner and outer loops by $T_1(s)$ and $T_2(s)$, respectively. $$T_1(s) = \frac{P(s)C(s)}{1 + P(s)C(s)K_T}$$ $$T_2(s) = \frac{T_1(s) \cdot \frac{1}{s}}{1 + T_1(s) \cdot \frac{1}{s}} = \frac{P(s)C(s)}{s(1 + P(s)C(s)K_T) + (1 + P(s)C(s)K_T + P(s)C(s))}$$ We get the folowing characteristic equation for the outer loop: $$$$}
+    \ans{Denote the transfer functions of the inner and outer loops by $T_1(s)$ and $T_2(s)$, respectively. $$T_1(s) = \frac{P(s)C(s)}{1 + P(s)C(s)K_T}$$ $$T_2(s) = \frac{T_1(s) \cdot I(s)}{1 + T_1(s) \cdot I(s)} = \frac{P(s)C(s)I(s)}{1 + P(s)C(s)K_T + P(s)C(s)I(s)}$$ We get the folowing characteristic equation for the outer loop: $$1 + P(s)C(s)K_T + P(s)C(s)I(s) = 0$$ Substitute $P(s)$, $C(s)$, $I(s)$, and $K = 600$ into the characteristic equation. $$1 + \frac{s + 3}{s^2 + 4s + 5} \cdot \frac{600}{s+10} \cdot K_T + \frac{s + 3}{s^2 + 4s + 5} \cdot \frac{600}{s+10} \cdot \frac{1}{s} = 0$$ Simplifying the above expression, we get $$s^4 + 14s^3 + 45s^2 + 50s + 600(s+3) + 600 K_T \left(s^2 +3s\right) = 0$$ Convert this expression into Evan's form. $$1 + K_T \frac{600 \left(s^2 +3s\right)}{s^4 + 14s^3 + 45s^2 + 650s + 1800} = 0$$}
     \part[1] Plot a root locus with respect to $K_T$.
     \begin{figure}[hbt!]
         \centering
@@ -134,7 +134,7 @@ expected value for $M_0$ of 0.6.
         \label{fig:P6b}
     \end{figure}
     \part[2] Considering your answers to all the previous parts, discuss the effect of rate gyro on the closed loop system.\\
-    \ans{$\Theta_{ss} \leq 0.02$ requires $K \geq 300$. However, the system becomes unstable for values of $K \geq K^*$ (where $K^* \in [130,160]$). By adding a rate gyro, we are essentially adding derivative control (related to $\dot{\theta}$), thus increasing the damping ratio and increasing stability. The poles of the system can lie in the left half-plane even if $K = 600$, due to appropriate values of $K_T$.}
+    \ans{$\Theta_{ss} \leq 0.02$ requires $K \geq 300$. However, the system becomes unstable for values of $K \geq K^*$ (where $K^* \in [130,160]$). By adding a rate gyro, we are essentially adding derivative control (related to $\dot{\theta}$), thus increasing the damping ratio and increasing stability. With the addition of the rate gyro in the closed-loop system, the poles of the system can lie in the left half-plane even if $K = 600$, given appropriate values of $K_T$.}
     % \part[1] What is the maximum damping factor of the complex roots obtainable with the configuration? Comment using the root locus from previous part.
 \end{parts}
 \end{questions}
